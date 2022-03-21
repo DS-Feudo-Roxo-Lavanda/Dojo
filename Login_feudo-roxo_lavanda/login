@@ -1,0 +1,95 @@
+# As bibliotecas utilizadas serão qslide3,tkinter e pandas
+
+## Criando Banco de Dados :
+# 
+# conexao =sqlite3. connect('clientes.db')
+#
+## Craindo cursor:
+## C = convexao,cursor()
+#
+## Criando Tabela
+#
+## c.execute("""CREATE TABLE clientes(
+## nome text,
+## sobrenome text,
+## email text,
+## telefone text
+## )""")
+#
+# #Commit as mudanças:
+# conexao.commit()
+#
+##Fechar banco de Dados:
+# conexao.close()
+
+
+
+def login_clientes():
+    login = sqlite3.connect('clientes.db')
+    c = login.cursor()
+
+    # Inserir dados na tabela:
+    c.execute("SELECT *, oid FROM clientes")
+    login_clientes = c.fetchall()
+    # print(clientes_cadastrados)
+    login_clientes=pd.DataFrame(login_clientes,columns=['nome','sobrenome','email','telefone','Id_banco'])
+    login_clientes.to_excel('clientes.xlsx')
+
+    # Commit as mudanças:
+    login.commit()
+
+    # Fechar o banco de dados:
+    login.close()
+
+
+
+## Possível mudança/incremento para parte de cadastro 
+# Colocar telefone(n encontrei nada no codigo no git)
+##def cadastrar_cliente():
+##   conexao = sqlite3.connect('clientes.db')
+##    c = conexao.cursor()
+
+    #Inserir dados na tabela:
+##    c.execute("INSERT INTO clientes VALUES (:nome,:sobrenome,:email,:telefone)",
+#              {
+#                  'nome': entry_nome.get(),
+#                  'sobrenome': entry_sobrenome.get(),
+#                  'email': entry_email.get(),
+#                  'telefone': entry_telefone.get()
+#             })
+
+
+    # Commit as mudanças:
+#    conexao.commit()
+
+    # Fechar o banco de dados:
+#    conexao.close()
+
+    # #Apaga os valores das caixas de entrada
+#    entry_nome.delete(0,"end")
+#    entry_sobrenome.delete(0,"end")
+#    entry_email.delete(0,"end")
+#    entry_telefone.delete(0,"end")
+
+## IDEIA DE CODIGO
+# 1° Tentativa de fazer no formato do código do git
+def save_user():
+        name = request.get_json().get ('name')
+        email =request.get_json().get ('email')
+        username = request.get_json().get('username')
+        password = request.get_json().get('password')
+        #Acrescentar telefone
+        telephone = request.get_json().get('telephone')
+        ## Acho que colocar telefone pode ser opcional
+        ## Então n vou fazer um "if/return" para telefone
+        if email == '':
+            return jsonify ("E-mail nãop pode ser vazio",status=400)
+
+        if username == '':
+            return jsonify ("Usuário não pode ser vazio",status=400)
+
+        if password == '':
+            return jsonify ("Senha não pode ser vazia",status=400)
+        
+
+        return jsonify()
